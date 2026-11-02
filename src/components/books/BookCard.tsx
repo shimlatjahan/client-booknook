@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Book } from "@/types/book";
+import Image from "next/image";
 
 type BookCardProps = {
   book: Book;
@@ -11,7 +12,7 @@ export default function BookCard({ book }: BookCardProps) {
 
       {/* Book Image */}
       <div className="h-64 overflow-hidden bg-gray-100">
-        <img
+        <Image
           src={book.image}
           alt={book.title}
           className="h-full w-full object-cover"
@@ -41,7 +42,7 @@ export default function BookCard({ book }: BookCardProps) {
           {book.description}
         </p>
 
-        {/* Available Copies */}
+        
         <div className="flex items-center justify-between border-t pt-4">
 
           <span className="text-sm text-gray-600">
