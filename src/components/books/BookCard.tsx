@@ -19,20 +19,19 @@ export default function BookCard({ book }: BookCardProps) {
         />
       </div>
 
-      {/* Book Details */}
+     
       <div className="space-y-3 p-5">
 
-        {/* Category */}
+        
         <span className="inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
           {book.category}
         </span>
 
-        {/* Title */}
+        
         <h2 className="text-2xl font-bold text-[#17382c]">
           {book.title}
         </h2>
 
-        {/* Author */}
         <p className="text-sm text-gray-600">
           By {book.author}
         </p>
