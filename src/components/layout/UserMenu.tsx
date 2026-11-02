@@ -47,7 +47,7 @@ export default function UserMenu({ user }: UserMenuProps) {
 
   const [loggingOut, setLoggingOut] = useState(false);
 
-  // User Initials
+
   const initials =
     user.name
       .trim()
@@ -70,7 +70,7 @@ export default function UserMenu({ user }: UserMenuProps) {
 
       toast.success("Logged out successfully!");
 
-      // Redirect to Login Page
+      
       router.replace("/login");
       router.refresh();
 
