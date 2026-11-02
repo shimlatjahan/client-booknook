@@ -36,7 +36,7 @@ export default function BookCard({ book }: BookCardProps) {
           By {book.author}
         </p>
 
-        {/* Description */}
+       
         <p className="line-clamp-3 text-sm text-gray-500">
           {book.description}
         </p>
@@ -54,7 +54,7 @@ export default function BookCard({ book }: BookCardProps) {
 
         </div>
 
-        {/* View Details Button */}
+       
         <Link
           href={`/books/${book._id}`}
           className="flex w-full items-center justify-center rounded-xl bg-[#17382c] px-5 py-3 font-semibold text-white transition-all duration-300 hover:bg-[#245540]"
