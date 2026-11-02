@@ -163,7 +163,7 @@ export default function UserMenu({ user }: UserMenuProps) {
             Add Book
           </DropdownMenuItem>
 
-          {/* MY BOOKS */}
+         
 
           <DropdownMenuItem
             onClick={() => router.push("/my-books")}
@@ -173,8 +173,7 @@ export default function UserMenu({ user }: UserMenuProps) {
             My Books
           </DropdownMenuItem>
 
-          {/* MY BORROWS */}
-
+          
           <DropdownMenuItem
             onClick={() => router.push("/my-borrows")}
             className="cursor-pointer gap-3 rounded-lg px-3 py-2.5"
@@ -187,7 +186,7 @@ export default function UserMenu({ user }: UserMenuProps) {
 
         <DropdownMenuSeparator />
 
-        {/* LOGOUT */}
+       
 
         <DropdownMenuGroup>
 
