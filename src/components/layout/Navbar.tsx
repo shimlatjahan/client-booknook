@@ -1,218 +1,227 @@
 "use client";
 
 import { useState } from "react";
+
 import Link from "next/link";
+
 import { usePathname } from "next/navigation";
 
 import {
   BookOpen,
+  ArrowRight,
   Menu,
   X,
-  ArrowRight,
 } from "lucide-react";
 
-import Container from "@/components/shared/Container";
+import { authClient } from "@/lib/auth-client";
 
-// Public navigation links
-const navLinks = [
-  {
-    name: "Home",
-    href: "/",
-  },
-  {
-    name: "All Books",
-    href: "/books",
-  },
-];
+import UserMenu from "@/components/layout/UserMenu";
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const pathname = usePathname();
 
-  const closeMenu = () => setIsMenuOpen(false);
+  const { data: session, isPending } =
+    authClient.useSession();
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const user = session?.user;
+
+  // Public Navigation
+  const publicLinks = [
+    {
+      label: "Home",
+      href: "/",
+    },
+    {
+      label: "All Books",
+      href: "/books",
+    },
+  ];
+
+  // Private Navigation
+  const privateLinks = [
+    {
+      label: "Add Book",
+      href: "/add-book",
+    },
+    {
+      label: "My Books",
+      href: "/my-books",
+    },
+    {
+      label: "My Borrows",
+      href: "/my-borrows",
+    },
+  ];
+
+  const navLinks = [
+    ...publicLinks,
+    ...(user ? privateLinks : []),
+  ];
+
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return (
+      pathname === href ||
+      pathname.startsWith(`${href}/`)
+    );
+  };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#EDE5D8] bg-[#FAF8F4]/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-[#EDE5D8] bg-[#FAF8F4]">
 
-      <Container>
+      <div className="mx-auto flex h-24 w-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
 
-        <div className="flex h-20 items-center justify-between">
+        {/* LOGO */}
 
-          {/* LOGO */}
-
-          <Link
-            href="/"
-            onClick={closeMenu}
-            className="flex items-center gap-3"
-          >
-
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#18392B] text-white">
-
-              <BookOpen size={25} strokeWidth={2} />
-
-            </div>
-
-            <div className="flex flex-col">
-
-              <span className="text-2xl font-bold tracking-tight text-[#18392B]">
-                BookNook
-              </span>
-
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#B68B52]">
-                Your Reading Corner
-              </span>
-
-            </div>
-
-          </Link>
-
-          {/* DESKTOP NAVIGATION */}
-
-          <nav
-            aria-label="Main navigation"
-            className="hidden items-center gap-8 lg:flex"
-          >
-
-            {navLinks.map((link) => {
-
-              const isActive = pathname === link.href;
-
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`relative text-sm font-semibold transition-colors duration-200 ${
-                    isActive
-                      ? "text-[#18392B]"
-                      : "text-gray-600 hover:text-[#18392B]"
-                  }`}
-                >
-
-                  {link.name}
-
-                  {isActive && (
-                    <span className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-[#B68B52]" />
-                  )}
-
-                </Link>
-              );
-            })}
-
-          </nav>
-
-          {/* DESKTOP AUTH BUTTONS */}
-
-          <div className="hidden items-center gap-4 lg:flex">
-
-            <Link
-              href="/login"
-              className="text-sm font-semibold text-[#18392B] transition-colors hover:text-[#B68B52]"
-            >
-              Login
-            </Link>
-
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 rounded-full bg-[#18392B] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#28533F] hover:shadow-lg"
-            >
-              Register
-
-              <ArrowRight size={16} />
-
-            </Link>
-
+        <Link
+          href="/"
+          className="flex shrink-0 items-center gap-3"
+        >
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#18392B] text-white">
+            <BookOpen size={29} strokeWidth={2} />
           </div>
 
-          {/* MOBILE MENU BUTTON */}
+          <div>
+            <h1 className="font-serif text-2xl font-bold leading-tight text-[#18392B] sm:text-3xl">
+              BookNook
+            </h1>
 
-          <button
-            type="button"
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#EDE5D8] text-[#18392B] transition-colors hover:bg-[#EDE5D8] lg:hidden"
-          >
+            <p className="mt-1 hidden text-[10px] font-semibold tracking-[0.2em] text-[#B78043] sm:block">
+              YOUR READING CORNER
+            </p>
+          </div>
+        </Link>
 
-            {isMenuOpen ? (
-              <X size={24} />
-            ) : (
-              <Menu size={24} />
-            )}
+        {/* DESKTOP NAVIGATION */}
 
-          </button>
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-8">
 
-        </div>
-
-        {/* MOBILE NAVIGATION */}
-
-        {isMenuOpen && (
-
-          <div
-            id="mobile-navigation"
-            className="border-t border-[#EDE5D8] pb-6 pt-5 lg:hidden"
-          >
-
-            <nav
-              aria-label="Mobile navigation"
-              className="flex flex-col gap-2"
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`whitespace-nowrap font-medium transition-colors hover:text-[#18392B] ${
+                isActive(link.href)
+                  ? "text-[#18392B]"
+                  : "text-[#475569]"
+              }`}
             >
+              {link.label}
+            </Link>
+          ))}
 
-              {navLinks.map((link) => {
+        </nav>
 
-                const isActive = pathname === link.href;
+        {/* DESKTOP AUTH AREA */}
 
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={closeMenu}
-                    className={`rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
-                      isActive
-                        ? "bg-[#E8EFE7] text-[#18392B]"
-                        : "text-gray-600 hover:bg-[#EDE5D8] hover:text-[#18392B]"
-                    }`}
-                  >
+        <div className="ml-auto hidden shrink-0 items-center gap-4 lg:flex">
 
-                    {link.name}
-
-                  </Link>
-                );
-              })}
-
-            </nav>
-
-            {/* MOBILE AUTH BUTTONS */}
-
-            <div className="mt-6 grid grid-cols-2 gap-3 border-t border-[#EDE5D8] pt-5">
-
+          {isPending ? (
+            <div className="h-11 w-11 animate-pulse rounded-full bg-gray-200" />
+          ) : user ? (
+            <UserMenu user={user} />
+          ) : (
+            <>
               <Link
                 href="/login"
-                onClick={closeMenu}
-                className="flex items-center justify-center rounded-full border border-[#18392B] px-5 py-3 text-sm font-semibold text-[#18392B] transition-colors hover:bg-[#E8EFE7]"
+                className="font-semibold text-[#18392B] transition hover:opacity-70"
               >
                 Login
               </Link>
 
               <Link
                 href="/register"
-                onClick={closeMenu}
-                className="flex items-center justify-center gap-2 rounded-full bg-[#18392B] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#28533F]"
+                className="flex items-center gap-2 rounded-full bg-[#18392B] px-6 py-3 font-semibold text-white transition hover:bg-[#28533F]"
               >
                 Register
-
-                <ArrowRight size={16} />
-
+                <ArrowRight size={18} />
               </Link>
+            </>
+          )}
 
-            </div>
+        </div>
+
+        {/* MOBILE NAVBAR */}
+
+        <div className="flex items-center gap-3 lg:hidden">
+
+          {!isPending && user && (
+            <UserMenu user={user} />
+          )}
+
+          <button
+            type="button"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={
+              mobileOpen
+                ? "Close navigation menu"
+                : "Open navigation menu"
+            }
+            aria-expanded={mobileOpen}
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#EDE5D8] text-[#18392B]"
+          >
+            {mobileOpen ? (
+              <X size={23} />
+            ) : (
+              <Menu size={23} />
+            )}
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* MOBILE MENU CONTENT */}
+
+      {mobileOpen && (
+        <nav className="border-t border-[#EDE5D8] bg-[#FAF8F4] px-5 py-5 lg:hidden">
+
+          <div className="flex flex-col gap-2">
+
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className={`rounded-xl px-4 py-3 font-medium transition ${
+                  isActive(link.href)
+                    ? "bg-[#18392B] text-white"
+                    : "text-[#18392B] hover:bg-[#EDE5D8]"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            {!isPending && !user && (
+              <>
+                <Link
+                  href="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-xl px-4 py-3 font-medium text-[#18392B] hover:bg-[#EDE5D8]"
+                >
+                  Login
+                </Link>
+
+                <Link
+                  href="/register"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-xl bg-[#18392B] px-4 py-3 text-center font-semibold text-white"
+                >
+                  Register
+                </Link>
+              </>
+            )}
 
           </div>
 
-        )}
-
-      </Container>
+        </nav>
+      )}
 
     </header>
   );

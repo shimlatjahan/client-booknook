@@ -1,259 +1,176 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
-import {
-  ArrowRight,
-  BookOpen,
-} from "lucide-react";
+import { ArrowRight, BookOpen, Loader2 } from "lucide-react";
 
-import Container from "@/components/shared/Container";
+import BookCard from "@/components/books/BookCard";
+import type { Book } from "@/types/book";
 
-type Book = {
-  _id: string;
-  title: string;
-  author: string;
-  category: string;
-  image?: string;
-  imageUrl?: string;
-};
+const API_URL = (
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:8000"
+).replace(/\/+$/, "");
 
-// Temporary preview data.
-// Real books will come from MongoDB.
+export default function NewArrivals() {
+  const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-const demoBooks: Book[] = [
-  {
-    _id: "demo-1",
-    title: "The Silent Forest",
-    author: "Sample Author",
-    category: "Fiction",
-  },
-  {
-    _id: "demo-2",
-    title: "Exploring Science",
-    author: "Sample Author",
-    category: "Science",
-  },
-  {
-    _id: "demo-3",
-    title: "Pages of History",
-    author: "Sample Author",
-    category: "History",
-  },
-  {
-    _id: "demo-4",
-    title: "The Little Explorer",
-    author: "Sample Author",
-    category: "Kids",
-  },
-  {
-    _id: "demo-5",
-    title: "Beyond the Stars",
-    author: "Sample Author",
-    category: "Science",
-  },
-  {
-    _id: "demo-6",
-    title: "A Journey Within",
-    author: "Sample Author",
-    category: "Fiction",
-  },
-];
+  // =====================================
+  // FETCH LATEST 6 BOOKS
+  // =====================================
 
-const coverColors = [
-  "from-[#214E3B] to-[#10271E]",
-  "from-[#365A71] to-[#182D43]",
-  "from-[#A06E43] to-[#593920]",
-  "from-[#946C88] to-[#49384C]",
-  "from-[#426B72] to-[#183C43]",
-  "from-[#806647] to-[#3F3024]",
-];
+  useEffect(() => {
+    const controller = new AbortController();
 
-async function getLatestBooks(): Promise<Book[]> {
-  const apiUrl = process.env.API_URL;
+    const fetchLatestBooks = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-  // No backend connection yet.
-  if (!apiUrl) return [];
+        const response = await fetch(
+          `${API_URL}/books?limit=6`,
+          {
+            signal: controller.signal,
+            cache: "no-store",
+          }
+        );
 
-  try {
-    const response = await fetch(
-      `${apiUrl}/books?sort=latest&limit=6`,
-      {
-        cache: "no-store",
+        if (!response.ok) {
+          throw new Error("Failed to load latest books");
+        }
+
+        const data: unknown = await response.json();
+
+        if (!Array.isArray(data)) {
+          throw new Error("Invalid book data received");
+        }
+
+        if (!controller.signal.aborted) {
+          setBooks(data as Book[]);
+        }
+      } catch (err) {
+        if (!controller.signal.aborted) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Something went wrong"
+          );
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
-    );
+    };
 
-    if (!response.ok) return [];
+    void fetchLatestBooks();
 
-    const data: unknown = await response.json();
-
-    if (!Array.isArray(data)) return [];
-
-    return data.slice(0, 6) as Book[];
-
-  } catch {
-    return [];
-  }
-}
-
-export default async function NewArrivals() {
-  const latestBooks = await getLatestBooks();
-
-  const isPreview = latestBooks.length === 0;
-
-  const books = isPreview
-    ? demoBooks
-    : latestBooks;
+    return () => {
+      controller.abort();
+    };
+  }, []);
 
   return (
-    <section className="bg-white py-20 md:py-24">
-
-      <Container>
+    <section className="bg-[#FAF8F4] px-4 py-16 md:py-20">
+      <div className="mx-auto max-w-7xl">
 
         {/* SECTION HEADER */}
 
-        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-
+        <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#B7773C]">
+              Discover Something New
+            </p>
 
-            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-[#B68B52]">
-              Fresh From Our Library
-            </span>
-
-            <h2 className="mt-3 text-3xl font-bold text-[#18392B] md:text-4xl">
+            <h2 className="text-3xl font-bold text-[#18392B] md:text-4xl">
               New Arrivals
             </h2>
 
-            <p className="mt-4 max-w-xl text-gray-600">
-              Discover the latest books added to our library
-              and find something exciting to read.
+            <p className="mt-3 text-gray-600">
+              Explore the latest books added to our library.
             </p>
-
-            {isPreview && (
-              <p className="mt-3 text-sm text-amber-700">
-                Demo preview — live books will appear
-                after the database is connected.
-              </p>
-            )}
-
           </div>
 
           <Link
             href="/books"
-            className="inline-flex items-center gap-2 font-semibold text-[#18392B] hover:text-[#B68B52]"
+            className="inline-flex items-center gap-2 font-semibold text-[#18392B] transition hover:text-[#B7773C]"
           >
-
-            See All Books
-
-            <ArrowRight size={18} />
-
+            View All Books
+            <ArrowRight className="h-5 w-5" />
           </Link>
-
         </div>
 
-        {/* BOOK GRID */}
+        {/* LOADING STATE */}
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {loading && (
+          <div
+            role="status"
+            className="flex min-h-64 items-center justify-center gap-3"
+          >
+            <Loader2 className="h-7 w-7 animate-spin text-[#18392B]" />
 
-          {books.map((book, index) => {
+            <span className="text-gray-600">
+              Loading latest books...
+            </span>
+          </div>
+        )}
 
-            const bookImage =
-              book.imageUrl || book.image;
+        {/* ERROR STATE */}
 
-            return (
-              <div
+        {!loading && error && (
+          <div className="rounded-2xl border border-red-200 bg-red-50 p-8 text-center">
+            <p className="font-medium text-red-600">
+              {error}
+            </p>
+          </div>
+        )}
+
+        {/* EMPTY STATE */}
+
+        {!loading && !error && books.length === 0 && (
+          <div className="rounded-2xl border border-[#EDE5D8] bg-white p-12 text-center shadow-sm">
+            <BookOpen className="mx-auto h-12 w-12 text-[#18392B]" />
+
+            <h3 className="mt-5 text-2xl font-bold text-[#18392B]">
+              No Books Available
+            </h3>
+
+            <p className="mt-3 text-gray-600">
+              New books will appear here once they are added.
+            </p>
+          </div>
+        )}
+
+        {/* LATEST BOOKS GRID */}
+
+        {!loading && !error && books.length > 0 && (
+          <div className="grid grid-cols-1 items-stretch gap-7 sm:grid-cols-2 lg:grid-cols-3">
+            {books.map((book) => (
+              <BookCard
                 key={book._id}
-                className="group overflow-hidden rounded-2xl border border-[#EDE5D8] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-              >
+                book={book}
+              />
+            ))}
+          </div>
+        )}
 
-                {/* BOOK COVER */}
+        {/* BOTTOM BUTTON */}
 
-                <div className="relative h-[270px] overflow-hidden bg-[#EDE5D8]">
-
-                  {bookImage ? (
-
-                    <Image
-                      src={bookImage}
-                      alt={`${book.title} book cover`}
-                      fill
-                      unoptimized
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-
-                  ) : (
-
-                    <div
-                      className={`flex h-full flex-col items-center justify-center bg-gradient-to-br ${
-                        coverColors[index % coverColors.length]
-                      } px-6 text-center text-white`}
-                    >
-
-                      <BookOpen
-                        size={42}
-                        className="mb-6 text-[#E4C38B]"
-                      />
-
-                      <h3 className="max-w-[220px] text-2xl font-semibold">
-                        {book.title}
-                      </h3>
-
-                      <p className="mt-5 text-sm text-white/70">
-                        BookNook Library
-                      </p>
-
-                    </div>
-
-                  )}
-
-                </div>
-
-                {/* BOOK INFORMATION */}
-
-                <div className="p-6">
-
-                  <span className="rounded-full bg-[#E8EFE7] px-3 py-1 text-xs font-medium text-[#18392B]">
-                    {book.category}
-                  </span>
-
-                  <h3 className="mt-4 line-clamp-1 text-xl font-semibold text-[#18392B]">
-                    {book.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm text-gray-500">
-                    By {book.author}
-                  </p>
-
-                  {isPreview ? (
-
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-gray-400">
-                      Preview Only
-                    </span>
-
-                  ) : (
-
-                    <Link
-                      href={`/books/${book._id}`}
-                      className="mt-6 inline-flex items-center gap-2 font-semibold text-[#18392B] transition-colors hover:text-[#B68B52]"
-                    >
-
-                      View Details
-
-                      <ArrowRight size={17} />
-
-                    </Link>
-
-                  )}
-
-                </div>
-
-              </div>
-            );
-          })}
-
-        </div>
-
-      </Container>
-
+        {!loading && !error && books.length > 0 && (
+          <div className="mt-12 text-center">
+            <Link
+              href="/books"
+              className="inline-flex items-center gap-3 rounded-xl bg-[#18392B] px-8 py-4 font-semibold text-white transition hover:bg-[#245540]"
+            >
+              Explore All Books
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

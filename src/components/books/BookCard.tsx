@@ -1,0 +1,69 @@
+import Link from "next/link";
+import type { Book } from "@/types/book";
+
+type BookCardProps = {
+  book: Book;
+};
+
+export default function BookCard({ book }: BookCardProps) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:shadow-lg">
+
+      {/* Book Image */}
+      <div className="h-64 overflow-hidden bg-gray-100">
+        <img
+          src={book.image}
+          alt={book.title}
+          className="h-full w-full object-cover"
+        />
+      </div>
+
+      {/* Book Details */}
+      <div className="space-y-3 p-5">
+
+        {/* Category */}
+        <span className="inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
+          {book.category}
+        </span>
+
+        {/* Title */}
+        <h2 className="text-2xl font-bold text-[#17382c]">
+          {book.title}
+        </h2>
+
+        {/* Author */}
+        <p className="text-sm text-gray-600">
+          By {book.author}
+        </p>
+
+        {/* Description */}
+        <p className="line-clamp-3 text-sm text-gray-500">
+          {book.description}
+        </p>
+
+        {/* Available Copies */}
+        <div className="flex items-center justify-between border-t pt-4">
+
+          <span className="text-sm text-gray-600">
+            Available Copies
+          </span>
+
+          <span className="rounded-full bg-green-50 px-3 py-1 text-sm font-semibold text-green-800">
+            {book.availableCopies} / {book.totalCopies}
+          </span>
+
+        </div>
+
+        {/* View Details Button */}
+        <Link
+          href={`/books/${book._id}`}
+          className="flex w-full items-center justify-center rounded-xl bg-[#17382c] px-5 py-3 font-semibold text-white transition-all duration-300 hover:bg-[#245540]"
+        >
+          View Details →
+        </Link>
+
+      </div>
+
+    </div>
+  );
+}

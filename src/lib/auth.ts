@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 import { MongoClient } from "mongodb";
+import { jwt } from "better-auth/plugins";
 
 // MongoDB Connection String
 const uri = process.env.MONGODB_URI;
@@ -32,7 +33,15 @@ export const auth = betterAuth({
     client,
   }),
 
-  emailAndPassword: {
-    enabled: true,
-  },
+ emailAndPassword: {
+  enabled: true,
+  minPasswordLength: 6,
+  autoSignIn: false,
+},
+
+ // JWT Plugin
+  plugins: [
+    jwt(),
+  ],
+
 });
