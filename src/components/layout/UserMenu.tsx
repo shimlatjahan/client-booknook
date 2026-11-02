@@ -33,7 +33,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-// User Type
+
 interface UserMenuProps {
   user: {
     name: string;
@@ -56,7 +56,7 @@ export default function UserMenu({ user }: UserMenuProps) {
       .map((word) => word[0]?.toUpperCase())
       .join("") || "U";
 
-  // Handle Logout
+  
   const handleLogout = async () => {
     try {
       setLoggingOut(true);
