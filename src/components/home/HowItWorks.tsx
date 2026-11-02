@@ -39,7 +39,7 @@ export default function HowItWorks() {
 
       <Container>
 
-        {/* SECTION HEADER */}
+        
 
         <div className="mb-14 text-center">
 
@@ -57,7 +57,7 @@ export default function HowItWorks() {
 
         </div>
 
-        {/* STEPS GRID */}
+      
 
         <div className="grid gap-8 md:grid-cols-3">
 
