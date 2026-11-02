@@ -128,7 +128,7 @@ export default function NewArrivals() {
           </div>
         )}
 
-        {/* EMPTY STATE */}
+        
 
         {!loading && !error && books.length === 0 && (
           <div className="rounded-2xl border border-[#EDE5D8] bg-white p-12 text-center shadow-sm">
@@ -144,7 +144,7 @@ export default function NewArrivals() {
           </div>
         )}
 
-        {/* LATEST BOOKS GRID */}
+       
 
         {!loading && !error && books.length > 0 && (
           <div className="grid grid-cols-1 items-stretch gap-7 sm:grid-cols-2 lg:grid-cols-3">
@@ -157,8 +157,7 @@ export default function NewArrivals() {
           </div>
         )}
 
-        {/* BOTTOM BUTTON */}
-
+       
         {!loading && !error && books.length > 0 && (
           <div className="mt-12 text-center">
             <Link
