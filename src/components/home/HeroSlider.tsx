@@ -14,7 +14,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// Banner Data
+
 const slides = [
   {
     id: 1,
@@ -48,7 +48,7 @@ const slides = [
   },
 ];
 
-// Swiper Theme
+
 const swiperStyles = {
   "--swiper-theme-color": "#18392B",
   "--swiper-navigation-color": "#18392B",
@@ -85,18 +85,16 @@ export default function HeroSlider() {
 
               <div className={`grid min-h-[550px] overflow-hidden lg:grid-cols-2 ${slide.background}`}>
 
-                {/* LEFT SIDE CONTENT */}
+                
 
                 <div className="order-2 flex flex-col justify-center px-8 py-14 sm:px-12 lg:order-1 lg:px-16">
 
-                  {/* Badge */}
-
+                
                   <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-medium text-[#18392B]">
                     <BookOpen size={16} />
                     <span>{slide.tag}</span>
                   </div>
 
-                  {/* Heading */}
 
                   <h1 className="max-w-xl text-4xl font-bold leading-tight tracking-tight text-[#18392B] md:text-5xl xl:text-6xl">
                     {slide.title}
@@ -106,14 +104,13 @@ export default function HeroSlider() {
                     </span>
                   </h1>
 
-                  {/* Description */}
+                  
 
                   <p className="mt-6 max-w-lg text-base leading-8 text-gray-600 md:text-lg">
                     {slide.description}
                   </p>
 
-                  {/* Browse Books Button */}
-
+               
                   <div className="mt-8">
                     <Link
                       href="/books"
@@ -126,7 +123,7 @@ export default function HeroSlider() {
 
                 </div>
 
-                {/* RIGHT SIDE IMAGE */}
+                
 
                 <div className="relative order-1 h-[300px] overflow-hidden lg:order-2 lg:h-full">
 
