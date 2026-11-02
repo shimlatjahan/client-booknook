@@ -87,7 +87,7 @@ export default function UserMenu({ user }: UserMenuProps) {
   return (
     <DropdownMenu>
 
-      {/* PROFILE PICTURE */}
+      
 
       <DropdownMenuTrigger
         render={
@@ -112,14 +112,13 @@ export default function UserMenu({ user }: UserMenuProps) {
         </Avatar>
       </DropdownMenuTrigger>
 
-      {/* DROPDOWN CONTENT */}
-
+  
       <DropdownMenuContent
         align="end"
         className="w-64 rounded-xl border border-[#EDE5D8] bg-white p-2 shadow-xl"
       >
 
-        {/* USER INFORMATION */}
+        
 
         <DropdownMenuGroup>
 
@@ -139,11 +138,11 @@ export default function UserMenu({ user }: UserMenuProps) {
 
         <DropdownMenuSeparator />
 
-        {/* NAVIGATION ITEMS */}
+       
 
         <DropdownMenuGroup>
 
-          {/* MY PROFILE */}
+          
 
           <DropdownMenuItem
             onClick={() => router.push("/profile")}
@@ -153,7 +152,7 @@ export default function UserMenu({ user }: UserMenuProps) {
             My Profile
           </DropdownMenuItem>
 
-          {/* ADD BOOK */}
+         
 
           <DropdownMenuItem
             onClick={() => router.push("/add-book")}
