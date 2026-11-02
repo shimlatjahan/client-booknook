@@ -47,8 +47,7 @@ export default function TopCategories() {
 
       <Container>
 
-        {/* HEADER */}
-
+        
         <div className="mb-12 text-center">
 
           <span className="text-sm font-semibold uppercase tracking-[0.2em] text-[#B68B52]">
@@ -66,8 +65,7 @@ export default function TopCategories() {
 
         </div>
 
-        {/* CATEGORY CARDS */}
-
+        
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
           {categories.map((category) => {

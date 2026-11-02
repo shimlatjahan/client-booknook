@@ -32,7 +32,7 @@ export default async function AllBooksPage() {
           )}
         </div>
 
-        {/* Error */}
+       
         {error ? (
           <div className="rounded-xl bg-red-50 p-8 text-center text-red-600">
             {error}
