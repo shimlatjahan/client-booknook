@@ -46,9 +46,7 @@ export default async function MyBooksPage() {
 
       <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
 
-        {/* =====================================
-            PAGE HEADER
-        ===================================== */}
+      
 
         <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
 
@@ -78,9 +76,7 @@ export default async function MyBooksPage() {
 
         </div>
 
-        {/* =====================================
-            ERROR STATE
-        ===================================== */}
+       
 
         {error ? (
 
@@ -96,10 +92,7 @@ export default async function MyBooksPage() {
 
         ) : myBooks.length === 0 ? (
 
-          /* =====================================
-              EMPTY STATE
-          ===================================== */
-
+          
           <div className="rounded-2xl border border-[#e8e2d8] bg-white px-6 py-16 text-center shadow-sm">
 
             <h2 className="text-2xl font-bold text-[#17382c]">
@@ -122,9 +115,7 @@ export default async function MyBooksPage() {
 
         ) : (
 
-          /* =====================================
-              MY BOOKS GRID
-          ===================================== */
+          
 
           <div className="grid grid-cols-1 items-start gap-7 sm:grid-cols-2 lg:grid-cols-3">
 
@@ -135,7 +126,7 @@ export default async function MyBooksPage() {
                 className="space-y-3"
               >
 
-                {/* Reusable Book Card */}
+                
                 <BookCard book={book} />
 
                 {/* Edit & Delete Buttons */}

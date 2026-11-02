@@ -15,7 +15,7 @@ export default async function AllBooksPage() {
     <main className="min-h-screen bg-[#faf8f5]">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
 
-        {/* Page Heading */}
+       
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold text-[#17382c] md:text-5xl">
             Explore All Books

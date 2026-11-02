@@ -355,7 +355,7 @@ export default function AddBookForm({
 
               </div>
 
-              {/* TOTAL COPIES */}
+              
 
               <div className="space-y-2">
 
@@ -376,11 +376,11 @@ export default function AddBookForm({
 
               </div>
 
-              {/* USER INFORMATION */}
+              
 
               <div className="grid gap-5 sm:grid-cols-2">
 
-                {/* ADDED BY NAME */}
+              
 
                 <div className="space-y-2">
 
