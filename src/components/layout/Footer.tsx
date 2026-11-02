@@ -61,16 +61,14 @@ export default function Footer() {
               </span>
             </Link>
 
-            {/* DESCRIPTION */}
-
+           
             <p className="max-w-sm leading-8 text-gray-300">
               Your cozy online library where stories come alive.
               Discover amazing books, explore new ideas,
               and enjoy a simple borrowing experience.
             </p>
 
-            {/* SOCIAL MEDIA ICONS */}
-
+           
             <div className="mt-8 flex items-center gap-4">
 
               {socialLinks.map((social) => {
