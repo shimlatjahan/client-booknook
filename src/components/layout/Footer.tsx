@@ -136,8 +136,7 @@ export default function Footer() {
 
           </div>
 
-          {/* CONTACT INFORMATION */}
-
+          
           <div>
 
             <h3 className="mb-6 text-lg font-semibold">
@@ -174,7 +173,7 @@ export default function Footer() {
 
         </div>
 
-        {/* FOOTER BOTTOM */}
+      
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/15 py-7 text-center md:flex-row md:text-left">
 
