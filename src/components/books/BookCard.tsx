@@ -10,14 +10,15 @@ export default function BookCard({ book }: BookCardProps) {
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:shadow-lg">
 
-      {/* Book Image */}
-      <div className="h-64 overflow-hidden bg-gray-100">
-        <Image
-          src={book.image}
-          alt={book.title}
-          className="h-full w-full object-cover"
-        />
-      </div>
+    <div className="relative h-64 overflow-hidden bg-gray-100">
+  <Image
+    src={book.image}
+    alt={book.title}
+    fill
+    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+    className="object-cover"
+  />
+</div>
 
      
       <div className="space-y-3 p-5">

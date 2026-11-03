@@ -64,7 +64,7 @@ const categories = [
 
 const API_URL = (
   process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:8000"
+  "https://server-booknook.vercel.app/"
 ).replace(/\/+$/, "");
 
 const getInitialForm = (book: Book): BookForm => ({
@@ -114,10 +114,7 @@ export default function BookDetailsActions({
     }));
   };
 
-  // =====================================
-  // GET JWT TOKEN
-  // =====================================
-
+  
   const getToken = async () => {
     const { data, error } = await authClient.token();
 
@@ -130,10 +127,7 @@ export default function BookDetailsActions({
     return data.token;
   };
 
-  // =====================================
-  // OPEN EDIT DIALOG
-  // =====================================
-
+ 
   const handleOpenEdit = () => {
     setForm(getInitialForm(book));
 
@@ -143,9 +137,7 @@ export default function BookDetailsActions({
     setEditOpen(true);
   };
 
-  // =====================================
-  // UPDATE BOOK
-  // =====================================
+  
 
   const handleUpdate = async (
     event: FormEvent<HTMLFormElement>
@@ -210,9 +202,7 @@ export default function BookDetailsActions({
     }
   };
 
-  // =====================================
-  // DELETE BOOK
-  // =====================================
+  
 
   const handleDelete = async () => {
     if (isBusy) return;
@@ -264,9 +254,7 @@ export default function BookDetailsActions({
   return (
     <div className="space-y-4">
 
-      {/* =====================================
-          EDIT & DELETE BUTTONS
-      ===================================== */}
+      
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 
@@ -309,9 +297,7 @@ export default function BookDetailsActions({
         </p>
       )}
 
-      {/* =====================================
-          EDIT BOOK DIALOG
-      ===================================== */}
+      
 
       <Dialog
         open={editOpen}

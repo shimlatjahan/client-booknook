@@ -30,7 +30,7 @@ export default async function BookDetailsPage({
   // Backend URL
   const apiUrl = (
     process.env.NEXT_PUBLIC_API_URL ||
-    "http://localhost:8000"
+    "https://server-booknook.vercel.app/"
   ).replace(/\/+$/, "");
 
   // Fetch Single Book

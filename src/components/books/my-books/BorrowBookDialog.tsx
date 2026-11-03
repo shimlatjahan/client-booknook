@@ -117,9 +117,7 @@ export default function BorrowBookDialog({
         .json()
         .catch(() => null);
 
-      // =====================================
-      // HANDLE API ERROR
-      // =====================================
+      
 
       if (!response.ok) {
         throw new Error(
@@ -154,17 +152,12 @@ export default function BorrowBookDialog({
     }
   };
 
-  // =====================================
-  // UI
-  // =====================================
+  
 
   return (
     <div className="mt-8 space-y-4">
 
-      {/* =====================================
-          BORROW BUTTON
-      ===================================== */}
-
+      
       <Button
         type="button"
         size="lg"
@@ -202,9 +195,7 @@ export default function BorrowBookDialog({
 
       </Button>
 
-      {/* =====================================
-          SUCCESS MESSAGE
-      ===================================== */}
+      
 
       {borrowed && (
         <div
@@ -225,9 +216,7 @@ export default function BorrowBookDialog({
         </div>
       )}
 
-      {/* =====================================
-          BORROW CONFIRMATION DIALOG
-      ===================================== */}
+     
 
       <AlertDialog
         open={open}

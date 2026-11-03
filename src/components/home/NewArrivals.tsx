@@ -10,7 +10,7 @@ import type { Book } from "@/types/book";
 
 const API_URL = (
   process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:8000"
+  "https://server-booknook.vercel.app/"
 ).replace(/\/+$/, "");
 
 export default function NewArrivals() {
@@ -18,9 +18,7 @@ export default function NewArrivals() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // =====================================
-  // FETCH LATEST 6 BOOKS
-  // =====================================
+  
 
   useEffect(() => {
     const controller = new AbortController();

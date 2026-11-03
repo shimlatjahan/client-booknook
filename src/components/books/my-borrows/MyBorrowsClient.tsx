@@ -25,9 +25,7 @@ import {
 
 import { authClient } from "@/lib/auth-client";
 
-// =====================================
-// BORROW TYPE
-// =====================================
+
 
 type Borrow = {
   _id: string;
@@ -54,7 +52,7 @@ type Borrow = {
 
 const API_URL = (
   process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:8000"
+  "https://server-booknook.vercel.app/"
 ).replace(/\/+$/, "");
 
 // =====================================
@@ -265,9 +263,7 @@ export default function MyBorrowsClient() {
     );
   }
 
-  // =====================================
-  // UI
-  // =====================================
+  
 
   return (
     <div className="space-y-8">

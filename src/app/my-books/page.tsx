@@ -14,23 +14,17 @@ export const metadata: Metadata = {
 
 export default async function MyBooksPage() {
 
-  // =====================================
-  // GET LOGGED-IN USER
-  // =====================================
+  
 
   const session = await requireAuth("/my-books");
 
   const user = session.user;
 
-  // =====================================
-  // FETCH BOOKS FROM BACKEND
-  // =====================================
+  
 
   const { books, error } = await getBooks();
 
-  // =====================================
-  // FILTER USER'S BOOKS
-  // =====================================
+  
 
   const userEmail = user.email.trim().toLowerCase();
 

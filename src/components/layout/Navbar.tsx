@@ -146,7 +146,7 @@ export default function Navbar() {
 
         </div>
 
-        {/* MOBILE NAVBAR */}
+        
 
         <div className="flex items-center gap-3 lg:hidden">
 
