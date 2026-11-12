@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 import BookCard from "@/components/books/BookCard";
 import { getBooks } from "@/lib/books";
 
+
+
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "All Books | BookNook",
   description: "Explore all books available at BookNook.",
