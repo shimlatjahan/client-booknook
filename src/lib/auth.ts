@@ -28,6 +28,7 @@ const db = client.db("booknookDB");
 // BetterAuth Configuration
 export const auth = betterAuth({
   appName: "BookNook",
+  trustedOrigins:["https://client-booknook.vercel.app"],
 
   database: mongodbAdapter(db, {
     client,
